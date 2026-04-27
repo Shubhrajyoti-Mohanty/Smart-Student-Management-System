@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Students - Smart Student Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Smart SMS</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="view-students.html" class="active">View Students</a>
+            <a href="add-student.html">Add Student</a>
+        </div>
+        <div class="nav-user">
+            <span class="text-muted">Welcome, Admin</span>
+            <button onclick="logout()" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Student Directory</h2>
+            <a href="add-student.html" class="btn btn-primary" style="width: auto;">+ New Student</a>
+        </div>
+        
+        <div id="tableAlert" class="alert"></div>
+
+        <div class="table-container">
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Course</th>
+                        <th>Attendance</th>
+                        <th>Marks</th>
+                        <th>Grade</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        checkAuth();
+        loadStudents();
+    </script>
+</body>
+</html>

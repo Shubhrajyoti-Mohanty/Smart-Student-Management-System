@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Student Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Smart SMS</div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="view-students.html">View Students</a>
+            <a href="add-student.html">Add Student</a>
+        </div>
+        <div class="nav-user">
+            <span class="text-muted">Welcome, Admin</span>
+            <button onclick="logout()" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Dashboard Overview</h2>
+        
+        <div class="dashboard-grid">
+            <div class="stat-card glass-panel">
+                <div>
+                    <h3>Total Students</h3>
+                    <div class="value" id="totalStudents">0</div>
+                </div>
+            </div>
+            <div class="stat-card glass-panel" style="border-left-color: var(--secondary-color);">
+                <div>
+                    <h3>Average Marks</h3>
+                    <div class="value" id="avgMarks">0%</div>
+                </div>
+            </div>
+            <div class="stat-card glass-panel" style="border-left-color: #f59e0b;">
+                <div>
+                    <h3>Average Attendance</h3>
+                    <div class="value" id="avgAttendance">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h3>Quick Actions</h3>
+            <p class="text-muted" style="margin-top: 1rem; margin-bottom: 2rem;">Manage student records efficiently using the quick actions below.</p>
+            <div style="display: flex; gap: 1rem;">
+                <a href="add-student.html" class="btn btn-primary" style="width: auto;">+ Add New Student</a>
+                <a href="view-students.html" class="btn btn-secondary" style="width: auto;">View All Records</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Check Auth
+        checkAuth();
+        
+        // Load stats on dashboard load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/students')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('totalStudents').innerText = data.length;
+                    
+                    if(data.length > 0) {
+                        let totalMarks = data.reduce((acc, curr) => acc + curr.marks, 0);
+                        let totalAtt = data.reduce((acc, curr) => acc + curr.attendance, 0);
+                        
+                        document.getElementById('avgMarks').innerText = (totalMarks / data.length).toFixed(1) + '%';
+                        document.getElementById('avgAttendance').innerText = (totalAtt / data.length).toFixed(1) + '%';
+                    }
+                })
+                .catch(err => console.error(err));
+        });
+    </script>
+</body>
+</html>
